@@ -203,5 +203,18 @@
         "Href": "pages/others/404"
       }
     ]
+  },
+  {
+    "Id": 32,
+    "Title": "Development",
+    "Icon": "mdi-dev-to",
+    "Children": [
+      {
+        "Id": 33,
+        "Title": "Table Demo",
+        "Icon": "mdi-circle",
+        "Href": "development/tabledemo"
+      }
+    ]
   }
 ]
