@@ -211,7 +211,7 @@
     "Children": [
       {
         "Id": 33,
-        "Title": "Table Demo",
+        "Title": "Table",
         "Icon": "mdi-circle",
         "Href": "development/tabledemo"
       }
