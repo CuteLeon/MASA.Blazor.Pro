@@ -39,17 +39,19 @@
 
     封装与 BlazorComponent 项目对应的 JS 模块。
 
+    `JsInteropConstants` 包含了交互的常量信息。
+
 ## Structure
 
 ### Guide
 
-    MASA.Blazor 项目内的 Mxxx 组件应继承于 Bxxx 组件。
+    MASA.Blazor 项目内的 `M{Component}` 组件应继承于 `B{Component}` 组件。
 
-    Bxxx 组件提供功能和接口，作为组件的基础。
+    `B{Component}` 组件提供功能和接口，作为组件的基础。
 
-    Mxxx 组件为 Bxxx 组件提供 MaterialDesign 风格的样式，作为组件的装饰，并可以被替代。
+    `M{Component}` 组件为 `B{Component}` 组件提供 MaterialDesign 风格的样式，作为组件的装饰，并可以被替代。
 
-    Mxxx 组件使用 `protected override void SetComponentClass()` 方法设置组件各个部分的样式。
+    `M{Component}` 组件使用 `SetComponentClass()` 方法设置组件各个部分的样式。
 
 ### BlazorComponent
 
@@ -124,3 +126,31 @@
 - `ComponentIdGenerator`
   
   - ID 生成器
+
+## ComponentCssProvider
+
+- 用于为组件设置样式
+
+- ```csharp
+  CssProvider
+      .Apply(
+          cssBuilder => cssBuilder.Add("").AddIf("", ()=> true),
+          styleBuilder => styleBuilder.AddColor("").AddIf("", ()=> true))
+      .Apply("header", cssBuilder => 
+          cssBuilder.Add("").AddIf("", ()=> true))
+      .Apply("content", cssBuilder => 
+          cssBuilder.Add("").AddIf("", ()=> true))
+      .Apply("border", cssBuilder => 
+          cssBuilder.Add("").AddIf("", ()=> true))
+  ```
+
+## ComponentAbstractProvider
+
+- 用于指明抽象或泛型组件的真实替代类型
+
+- ```csharp
+  AbstractProvider
+      .Apply(typeof(BAlertWrapper<>), typeof(BAlertWrapper<MAlert>))
+      .Apply(typeof(BButtonSlot<>), typeof(BButtonSlot<MAlert>))
+      .Apply<BButton, MButton>("dismissible", attrs => {  attrs[nameof(MIcon.Dark)] = IsDarkTheme; });
+  ```
