@@ -5,10 +5,95 @@
 @inject NavHelper NavHelper;
 @implements IDisposable
 
-<h1>TableDemo</h1>
-<h2>TableDemo</h2>
-<h3>TableDemo</h3>
+<h6>TableDemo</h6>
+
+<MDataTable Headers="_headers"
+			Items="_desserts"
+			ItemKey="r=>r.Name"
+			SortBy="nameof(Dessert.Name)"
+			GroupBy="new List<string>(){nameof(Dessert.Name), nameof(Dessert.Dairy)}"
+			Class="elevation-1"
+			ShowGroupBy>
+</MDataTable>
 
 @code {
+	public class Dessert
+	{
+		public string Name { get; set; }
 
+		public string Category { get; set; }
+
+		public string Dairy { get; set; }
+	}
+
+	private List<DataTableHeader<Dessert>> _headers = new List<DataTableHeader<Dessert>>
+	{
+		new () { Text= "Dessert (100g serving)",Value= nameof(Dessert.Name),Align= DataTableHeaderAlign.Start,},
+		new (){ Text= "Category", Value= nameof(Dessert.Category),Align=DataTableHeaderAlign.Start,},
+		new (){ Text= "Dairy", Value= nameof(Dessert.Dairy),Align=DataTableHeaderAlign.Start,}
+	};
+
+	private List<Dessert> _desserts = new List<Dessert>
+		{
+		   new Dessert
+		   {
+			  Name= "Name_1",
+			  Category="Name-1, Yes, No.1",
+			  Dairy="Yes"
+			},
+			new Dessert
+			{
+			  Name= "Name_1",
+			  Category="Name-1, No, No.2",
+			  Dairy="No"
+			},
+			new Dessert
+			{
+			  Name= "Name_1",
+			  Category="Name-1, Yes, No.3",
+			  Dairy="Yes"
+			},
+			new Dessert
+			{
+			  Name= "Name_2",
+			  Category="Name-2, Yes, No.1",
+			  Dairy="Yes"
+			},
+			new Dessert
+			{
+				Name= "Name_2",
+				Category="Name-2, No, No.2",
+				Dairy="No"
+			},
+			new Dessert
+			{
+				Name= "Name_2",
+				Category="Name-2, No, No.3",
+				Dairy="No"
+			},
+			new Dessert
+			{
+				Name= "Name_2",
+				Category="Name-2, Yes, No.4",
+				Dairy="Yes"
+			},
+			new Dessert
+			{
+				Name= "Name_3",
+				Category="Name-3, No, No.1",
+				Dairy="No"
+			},
+			new Dessert
+			{
+				Name= "Name_3",
+				Category="Name-3, Yes, No.2",
+				Dairy="Yes"
+			},
+			new Dessert
+			{
+				Name= "Name_3",
+				Category="Name-3, Yes, No.3",
+				Dairy="Yes"
+			}
+		};
 }
