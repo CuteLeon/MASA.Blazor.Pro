@@ -1,6 +1,7 @@
 ﻿@inherits ProComponentBase
 @inject NavHelper NavHelper
 @inject GlobalConfig GlobalConfig
+@implements IDisposable
 
 <MNavigationDrawer @bind-Value="Visible" 
                    Class="@($"navigation {ComputedNavigationClass}")"
@@ -62,7 +63,7 @@
     </MList>
 </MNavigationDrawer>
 
-@if (!(Masa.Breakpoint.Mobile && Visible))
+@if (!(Masa.Breakpoint.Mobile && Visible is true))
 {
     <MButton Small Fab Class="nav-toggle-btn" Color="primary" OnClick="Switch">
         <MIcon Class="white--text">
@@ -76,13 +77,25 @@
     [Inject]
     public MasaBlazor Masa { get; set; } = default!;
 
-    public bool Visible { get; set; } = true;
+    public bool? Visible { get; set; } = true;
 
     public string ComputedNavigationClass => (GlobalConfig.NavigationStyle == NavigationStyles.Rounded ? "rounded-r-xl" : string.Empty);
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        GlobalConfig.NavigationStyleChanged += NavigationStyleChanged;
+    }
+
+    private void NavigationStyleChanged(object? sender, EventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
     public void Switch()
     {
-        if (Visible)
+        if (Visible is true)
         {
             GlobalConfig.ExpandOnHover = !GlobalConfig.ExpandOnHover;
         }
@@ -91,6 +104,11 @@
             GlobalConfig.ExpandOnHover = false;
             Visible = true;
         }
+    }
+
+    void IDisposable.Dispose()
+    {
+        GlobalConfig.NavigationStyleChanged -= NavigationStyleChanged;
     }
 
 }
